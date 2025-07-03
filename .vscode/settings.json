@@ -1,0 +1,10 @@
+{
+    "java.project.sourcePaths": [
+        "src"
+    ],
+    "java.project.referencedLibraries": [
+        "lib\\junit-platform-console-standalone-1.12.0.jar"
+    ],
+    "java.project.outputPath": "bin",
+    "java.debug.settings.vmArgs": "-ea --enable-preview --module-path ./lib/",
+}
