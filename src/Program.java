@@ -9,6 +9,15 @@ public final class Program
     private static ServerSocket serverSocket = null;
     private static boolean isGameRunning = true;
 
+    private static java.util.Map<Socket, ClientData> ClientMap = new HashMap<>();
+
+    public static int hostClient()
+    {
+
+        return 0;
+    }
+
+
     /** Entrypoint of server application. No GUI. */
     public static void main(String[] args)
     {
@@ -31,9 +40,14 @@ public final class Program
             try
             {
                 socket = serverSocket.accept();
-                System.out.println("Received connection");
-                onRequestReceived(socket);
-                socket.close();
+                if(ClientMap.keySet().contains(socket) != true) ClientMap.put(socket, new ClientData());
+                
+                for(Socket client : ClientMap.keySet())
+                {
+                    System.out.println("Received connection");
+                    onRequestReceived(client);
+                    client.close();
+                }
             }
             catch (Exception e)
             {
