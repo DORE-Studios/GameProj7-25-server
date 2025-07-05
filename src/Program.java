@@ -34,17 +34,18 @@ public final class Program
 
         System.out.println("Server app init success");
 
+        int i = 0; // for testing multiple clients, this is the *address*
+
         while (isGameRunning)
         {
             Socket socket;
             try
             {
                 socket = serverSocket.accept();
-                if(ClientMap.keySet().contains(socket) != true) ClientMap.put(socket, new ClientData());
+                if(ClientMap.keySet().contains(socket) != true) ClientMap.put(socket, new ClientData(i)); i++;
                 
                 for(Socket client : ClientMap.keySet())
                 {
-                    System.out.println("Received connection");
                     onRequestReceived(client);
                     client.close();
                 }
@@ -62,8 +63,9 @@ public final class Program
     private static void onRequestReceived(Socket socket) throws IOException
     {
         Objects.requireNonNull(socket);
-        byte[] receivedData = socket.getInputStream().readAllBytes();
+        System.out.println("connection received from" + ClientMap.get(socket).getAddress());
 
-        System.out.println(new String(receivedData));
+        //byte[] receivedData = socket.getInputStream().readAllBytes();
+        //System.out.println(new String(receivedData));
     }
 }
